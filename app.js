@@ -44,7 +44,10 @@ io.on('connection', (socket) => {
             io.emit('message', {
                 site: 'manager',
                 table: 'user',
-                signup_user_level: 10
+                signup_user_level: 10,
+                signup_user_id: msg?.signup_user_id,
+                signup_user_pk: msg?.signup_user_pk,
+                signup_user_date: msg?.signup_user_date,
             });
         }
     });
