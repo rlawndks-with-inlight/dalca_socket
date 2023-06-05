@@ -40,14 +40,37 @@ io.on('connection', (socket) => {
 
     socket.on('message', (msg) => {
         console.log('message: ' + JSON.stringify(msg));
-        if (msg?.signup_user_level == 10) {
+        let method = msg?.method;
+        let data = msg?.data;
+
+        if (method == 'signup_user_level_10') {//공인중개사 회원가입
             io.emit('message', {
-                site: 'manager',
-                table: 'user',
-                signup_user_level: 10,
-                signup_user_id: msg?.signup_user_id,
-                signup_user_pk: msg?.signup_user_pk,
-                signup_user_date: msg?.signup_user_date,
+                method: method,
+                data: {
+                    site: 'manager',
+                    table: 'user',
+                    signup_user_level: 10,
+                    signup_user_id: data?.signup_user_id,
+                    signup_user_pk: data?.signup_user_pk,
+                }
+            });
+        }
+        if (method == 'add_request') {
+            io.emit('message', {
+                method: method,
+                data: {
+                    site: 'manager',
+                    title: data?.title,
+                }
+            });
+        }
+        if (method == 'want_pay_cancel') {
+            io.emit('message', {
+                method: method,
+                data: {
+                    site: 'manager',
+                    pk: data?.pk,
+                }
             });
         }
     });
